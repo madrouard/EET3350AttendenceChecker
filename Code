@@ -73,6 +73,13 @@ void loop() {
         id[len] = key;       // Overwrite old '\0'
         id[len + 1] = '\0'; // Add new '\0'
     }
+    if (len > 4 && found == false) {
+        digitalWrite(ledPins[2], HIGH);
+        delay(500);
+        digitalWrite(ledPins[2], LOW);
+        id[0] = '\0';
+        found = false;
+    }
     printf("%s\n", id);
   }
 
