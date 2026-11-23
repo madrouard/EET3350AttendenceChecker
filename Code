@@ -31,7 +31,7 @@ void setup() {
 void loop() {
   char key = keypad.getKey();
 
-  if (key != NO_KEY) {
+  if (key != NO_KEY && found != false) {
       digitalWrite(ledPins[0], HIGH);
       delay(50);
       digitalWrite(ledPins[0], LOW);
