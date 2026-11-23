@@ -15,7 +15,9 @@ char keys[ROWS][COLS] = {
 uint8_t ledPins[LEDS] = { 9, 6, 3,};
 uint8_t rowPins[ROWS] = { 26, 22, 21, 20 }; // Pins connected to R1, R2, R3, R4
 uint8_t colPins[COLS] = { 19, 18, 17, 16 }; // Pins connected to C1, C2, C3, C4
-
+char id[20] = "";
+const String Codes[3] = {"1234","AB12","ABCD"};
+bool found = false;
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
@@ -26,10 +28,6 @@ void setup() {
   }
 }
 
-const String Codes[] = ("1234","AB12","ABCD");
-String input = "";
-bool found = false;
-
 void loop() {
   char key = keypad.getKey();
 
@@ -38,45 +36,47 @@ void loop() {
       delay(50);
       digitalWrite(ledPins[0], LOW);
 
-      if (key == '*')
-      {
-        //clear
-      }
-      else if ( key == '#')
-      {
+  }
 
-        for(int i = 0; i < sizeof(array); i++)
+  if (key == '*'){
+    id[0] = '\0';
+  }
+  else if (key == '#'){
+    for(int i = 0; i < sizeof(Codes); i++)
         {
-          if (input == array[i])
+          if (id == Codes[i] && id != NULL && id[0] != '\0')
           {
             found = true;
           }
-          
         }
 
         if (found)
         {
             digitalWrite(ledPins[1], HIGH);
-            delay(50);
+            delay(500);
             digitalWrite(ledPins[1], LOW);
 
-            input = "";
+            id[0] = '\0';
             found = false;
         }
         else
-        (
+        {
             digitalWrite(ledPins[2], HIGH);
-            delay(50);
+            delay(500);
             digitalWrite(ledPins[2], LOW);
-            input = "";
-        )
-      }
-      else
-      {
-        //add to array
-      }
-
+            id[0] = '\0';
+        }
   }
+  else{
+    size_t len = strlen(id);
+    if (len < sizeof(id) - 1) {
+        id[len] = key;       // Overwrite old '\0'
+        id[len + 1] = '\0'; // Add new '\0'
+    }
+    printf("%s\n", id);
+  }
+
+  
 
   delay(10);
 }
