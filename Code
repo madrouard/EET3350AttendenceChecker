@@ -26,6 +26,10 @@ void setup() {
   }
 }
 
+const String Codes[] = ("1234","AB12","ABCD");
+String input = "";
+bool found = false;
+
 void loop() {
   char key = keypad.getKey();
 
@@ -33,6 +37,44 @@ void loop() {
       digitalWrite(ledPins[0], HIGH);
       delay(50);
       digitalWrite(ledPins[0], LOW);
+
+      if (key == '*')
+      {
+        //clear
+      }
+      else if ( key == '#')
+      {
+
+        for(int i = 0; i < sizeof(array); i++)
+        {
+          if (input == array[i])
+          {
+            found = true;
+          }
+          
+        }
+
+        if (found)
+        {
+            digitalWrite(ledPins[1], HIGH);
+            delay(50);
+            digitalWrite(ledPins[1], LOW);
+
+            input = "";
+            found = false;
+        }
+        else
+        (
+            digitalWrite(ledPins[2], HIGH);
+            delay(50);
+            digitalWrite(ledPins[2], LOW);
+            input = "";
+        )
+      }
+      else
+      {
+        //add to array
+      }
 
   }
 
